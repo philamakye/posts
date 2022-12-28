@@ -1,0 +1,43 @@
+spring:
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+  profiles:
+    active: test
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${PROD_DB_USERNAME}
+    url: jdbc:mysql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
+    password: ${PROD_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/posts
+    password: inoeume0
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
